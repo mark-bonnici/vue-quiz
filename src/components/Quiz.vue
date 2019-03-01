@@ -46,7 +46,7 @@ export default {
     axios
       .get("https://opentdb.com/api.php?amount=10&type=boolean")
       .then(res => (this.quiz = res.data.results))
-      .catch(err => (this.error = true))
+      .catch(() => (this.error = true))
       .finally(() => (this.loading = false));
   },
   methods: {
@@ -56,7 +56,7 @@ export default {
     },
     calculatePercentage: function() {
       return (this.correctAnswers / this.quiz.length) * 100;
-    }    
+    }
   }
 };
 </script>

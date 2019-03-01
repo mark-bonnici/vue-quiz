@@ -110,10 +110,9 @@ button {
       display: flex;
       justify-content: center;
       align-items: center;
-      font-family: "Source Code Pro", monospace;
       letter-spacing: 1px;
       text-transform: uppercase;
-      font-size: 18px;
+      font-size: 1.2em;
       background: $btn-color-bg;
       transform: scale(0.96, 0.96);
       transition: all 0.3s;

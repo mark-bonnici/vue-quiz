@@ -11,7 +11,6 @@ import Vue from "vue";
 import VueParticles from "vue-particles";
 
 import Quiz from "./components/Quiz";
-import Question from "./components/Question";
 import Header from "./components/layout/Header";
 
 Vue.use(VueParticles);
@@ -34,10 +33,7 @@ export default {
 body {
   font-family: Arial, Helvetica, sans-serif;
   line-height: 1.4;
-  background: #000;
   color: #fff;
-  width: 100wh;
-	height: 90vh;
 	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
 	background-size: 400% 400%;
 	animation: Gradient 15s ease infinite;
@@ -55,12 +51,11 @@ body {
 	}
 }
 #particles-js {
-  background-image: url(/static/img/sky.871d198.jpg);
   background-size: cover;
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%;
+  height: 90vh;
 }
 </style>
