@@ -2,7 +2,7 @@
   <div class="btn-wrapper">
     <div class="btn-wrapper__container">
       <div class="btn-inner false">
-        <button class="btn-inner__text" v-on:click="refresh">Try Again</button>
+        <button class="btn-inner__text" v-on:click="$emit('refresh')">Try Again</button>
       </div>
     </div>
   </div>
@@ -10,14 +10,7 @@
 
 <script>
 export default {
-  name: "Question",
-  props: ["title", "answer", "index"],
-  methods: {
-    refresh: function() {
-      // todo: reset without hard reload
-      window.location.reload();
-    }
-  }
+  name: "PrimaryButton"
 };
 </script>
 

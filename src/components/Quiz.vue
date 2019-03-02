@@ -1,22 +1,22 @@
 <template>
   <div>
-    <div v-for="(question, index) in quiz" v-bind:key="index">
-      <!-- todo: make question.question more semantically readable -->
-      <div v-show="index === questionIndex">
-        <Question
-          :title="question.question"
-          :index="index"
-          :answer="question.correct_answer"
-          v-on:next="next"
-        ></Question>
+    <div v-if="questionIndex != quiz.length">
+      <div v-for="(question, index) in quiz" v-bind:key="index">
+        <!-- todo: make question.question more semantically readable -->
+        <div v-show="index === questionIndex">
+          <Question
+            :title="question.question"
+            :index="index"
+            :answer="question.correct_answer"
+            v-on:next="next"
+          ></Question>
+        </div>
       </div>
     </div>
-    <!-- todo: check if this can be a slot -->
-    <div v-show="questionIndex === quiz.length" class="results">
-      <p>You got</p>
-      <p>{{calculatePercentage() }}%</p>
-      <p>of the questions right</p>
-      <PrimaryButton></PrimaryButton>
+    <div v-if="questionIndex === quiz.length" class="results">
+      <h2>You got {{this.correctAnswers }} of the questions right</h2>
+      <p>You did better then {{this.ladderPosition}}% of all challengers</p>
+      <PrimaryButton v-on:refresh="refresh"></PrimaryButton>
     </div>
   </div>
 </template>
@@ -42,7 +42,8 @@ export default {
       questionIndex: 0,
       correctAnswers: 0,
       scores: [],
-      newScore: ""
+      worsePerformers: 0,
+      ladderPosition: 0
     };
   },
   mounted() {
@@ -56,18 +57,25 @@ export default {
     next: function(choice) {
       if (choice) this.correctAnswers++;
       this.questionIndex++;
+      if (this.questionIndex === this.quiz.length)
+        this.ladderPosition = this.calculatePerformance();
     },
-    calculatePercentage: function() {
-      if (this.questionIndex === this.quiz.length) {
-        this.addScore(this.correctAnswers);
-        return (this.correctAnswers / this.quiz.length) * 100;
-      } else return null;
+    refresh: function() {
+      this.questionIndex = 0;
+      this.worsePerformers = 0;
+      this.correctAnswers = 0;
+      this.addScore(this.correctAnswers);
+    },
+    calculatePerformance: function() {
+      for (let i = 0; i < this.scores.length; i++) {
+        if (this.scores[i].score < this.correctAnswers) this.worsePerformers++;
+      }
+      return ((this.worsePerformers / this.scores.length) * 100).toFixed(2);
     },
     addScore: function(userScore) {
       this.$firestore.scores.add({
-        userScore: userScore
+        score: userScore
       });
-      this.newScore = "";
     }
   },
   firestore() {
