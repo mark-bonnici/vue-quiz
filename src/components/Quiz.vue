@@ -1,6 +1,7 @@
 <template>
   <div>
-    <div v-if="questionIndex != quiz.length">
+    <!-- todo: make "questionIndex != this.quiz.length" as a computed property -->
+    <div v-if="questionIndex != this.quiz.length">
       <div v-for="(question, index) in quiz" v-bind:key="index">
         <!-- todo: make question.question more semantically readable -->
         <div v-show="index === questionIndex">
@@ -13,8 +14,9 @@
         </div>
       </div>
     </div>
+    <!-- todo: make "questionIndex != this.quiz.length" as a computed property -->
     <Results
-      v-if="questionIndex === quiz.length"
+      v-if="questionIndex === this.quiz.length"
       :correctAnswers="this.correctAnswers"
       :ladder="this.ladderPosition"
       @refresh="refresh"
@@ -38,7 +40,7 @@ export default {
   data() {
     return {
       // todo: proper error handling, use 'loading' and 'error' in a meaningful way
-      quiz: null,
+      quiz: [],
       loading: true,
       error: false,
       questionIndex: 0,
