@@ -9,10 +9,13 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "firebase": "^5.8.5",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
     "vue": "^2.6.6",
-    "vue-particles": "^1.0.9"
+    "vue-firestore": "^0.3.21",
+    "vue-particles": "^1.0.9",
+    "vuefire": "^1.4.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.4.0",

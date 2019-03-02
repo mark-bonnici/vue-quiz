@@ -25,6 +25,7 @@
 import Question from "./Question";
 import PrimaryButton from "./PrimaryButton";
 import axios from "axios";
+import { db } from "../main";
 
 export default {
   name: "Quiz",
@@ -39,7 +40,9 @@ export default {
       loading: true,
       error: false,
       questionIndex: 0,
-      correctAnswers: 0
+      correctAnswers: 0,
+      scores: [],
+      newScore: ""
     };
   },
   mounted() {
@@ -55,8 +58,22 @@ export default {
       this.questionIndex++;
     },
     calculatePercentage: function() {
-      return (this.correctAnswers / this.quiz.length) * 100;
+      if (this.questionIndex === this.quiz.length) {
+        this.addScore(this.correctAnswers);
+        return (this.correctAnswers / this.quiz.length) * 100;
+      } else return null;
+    },
+    addScore: function(userScore) {
+      this.$firestore.scores.add({
+        userScore: userScore
+      });
+      this.newScore = "";
     }
+  },
+  firestore() {
+    return {
+      scores: db.collection("scores")
+    };
   }
 };
 </script>
