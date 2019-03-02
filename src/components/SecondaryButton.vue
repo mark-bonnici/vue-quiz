@@ -2,7 +2,11 @@
   <div class="btn-wrapper">
     <div class="btn-wrapper__container">
       <div class="btn-inner false">
-        <button class="btn-inner__text" @click.prevent="$emit('refresh')">Try Again</button>
+        <button
+          class="btn-inner__text"
+          @click.prevent="$emit('next', answer === value)"
+          v-bind:name="index"
+        >{{value}}</button>
       </div>
     </div>
   </div>
@@ -10,14 +14,14 @@
 
 <script>
 export default {
-  name: "PrimaryButton"
+  name: "SecondaryButton",
+  props: ["index", "value", "answer"]
 };
 </script>
 
 <style scoped lang="scss">
 // todo: refactor duplicate css
-
-$btn-color-primary: #f713b6;
+$btn-color-primary: #13f779;
 $btn-color-bg: #413e6b;
 
 button {

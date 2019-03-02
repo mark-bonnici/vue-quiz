@@ -8,22 +8,24 @@
             :title="question.question"
             :index="index"
             :answer="question.correct_answer"
-            v-on:next="next"
+            @next="next"
           ></Question>
         </div>
       </div>
     </div>
-    <div v-if="questionIndex === quiz.length" class="results">
-      <h2>You got {{this.correctAnswers }} of the questions right</h2>
-      <p>You did better then {{this.ladderPosition}}% of all challengers</p>
-      <PrimaryButton v-on:refresh="refresh"></PrimaryButton>
-    </div>
+    <Results
+      v-if="questionIndex === quiz.length"
+      :correctAnswers="this.correctAnswers"
+      :ladder="this.ladderPosition"
+      @refresh="refresh"
+    ></Results>
   </div>
 </template>
 
 <script>
 import Question from "./Question";
-import PrimaryButton from "./PrimaryButton";
+import Results from "./Results";
+
 import axios from "axios";
 import { db } from "../main";
 
@@ -31,7 +33,7 @@ export default {
   name: "Quiz",
   components: {
     Question,
-    PrimaryButton
+    Results
   },
   data() {
     return {
@@ -87,12 +89,5 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.results {
-  margin-top: 40px;
 
-  p {
-    font-size: 2rem;
-    text-align: center;
-  }
-}
 </style>
